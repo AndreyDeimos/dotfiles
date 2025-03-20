@@ -98,7 +98,7 @@ return {
     version = "*",
     lazy = false,
     config = function()
-      require("mini.animate").setup()
+      require("mini.animate").setup { cursor = { enable = false } }
     end,
   },
 }
