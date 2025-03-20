@@ -93,4 +93,12 @@ return {
   },
   { "nvchad/volt", lazy = true },
   { "nvchad/menu", lazy = true },
+  {
+    "echasnovski/mini.animate",
+    version = "*",
+    lazy = false,
+    config = function()
+      require("mini.animate").setup()
+    end,
+  },
 }
