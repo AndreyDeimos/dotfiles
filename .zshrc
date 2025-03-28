@@ -22,6 +22,7 @@ alias help="echo 'I need somebody'"
 alias cura="env QT_QPA_PLATFORM=wayland flatpak run com.ultimaker.cura -platformtheme gtk3"
 alias find="find 2> /dev/null"
 alias cd="z"
+alias tlmgr="$TEXMFDIST/scripts/texlive/tlmgr.pl --usermode"
 
 of() {
     loffice "$(find . -type f -iname "$1" | fzf)"

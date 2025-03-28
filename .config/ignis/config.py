@@ -56,20 +56,21 @@ class Workspaces(Widget.Box):
         super().__init__()
         self.set_spacing(5)
         self.set_child(
-            hyprland.bind(
-                "workspaces",
-                transform=lambda value: 
-                    [self.workspace_button(i) for i in value]
+            hyprland.bind_many(
+                ["workspaces", "active_workspace"],
+                transform=lambda workspaces, *_: [
+                    self.workspace_button(i) for i in workspaces
+                ],
             )
         )
 
     class workspace_button(Widget.Button):
         def __init__(self, workspace):
             super().__init__()
-            self.id = workspace["id"]
+            self.id = workspace.id
             self.set_child(Widget.Label(label=str(self.id)))
             self.set_on_click(lambda x: hyprland.switch_to_workspace(self.id))
-            if workspace["id"] == hyprland.active_workspace["id"]:
+            if workspace.id == hyprland.active_workspace.id:
                 self.add_css_class("active")
 
 class Clock(Widget.Button):
