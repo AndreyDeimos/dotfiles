@@ -20,13 +20,19 @@ bindkey  "^[[3~"  delete-char
 bindkey "^H" backward-kill-word
 alias help="echo 'I need somebody'"
 alias cura="env QT_QPA_PLATFORM=wayland flatpak run com.ultimaker.cura -platformtheme gtk3"
-alias find="find 2> /dev/null"
+# alias find="find 2> /dev/null"
 alias cd="z"
 alias tlmgr="$TEXMFDIST/scripts/texlive/tlmgr.pl --usermode"
+alias snvim="sudo -e"
 
 of() {
     loffice "$(find . -type f -iname "$1" | fzf)"
 }
+
+f() {
+    find . -type f -iname "$1" 2> /dev/null
+}
+
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
