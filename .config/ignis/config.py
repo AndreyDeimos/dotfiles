@@ -1,7 +1,7 @@
 # fmt: off
 
-from ignis.services import mpris
-from ignis.widgets import Widget, label
+from modules import WindowManager
+from ignis.widgets import Widget, revealer
 from ignis.utils import Utils
 from ignis.app import IgnisApp
 from ignis.services.audio import AudioService
@@ -14,9 +14,13 @@ from ignis.services.mpris import MprisService, MprisPlayer
 import datetime
 import subprocess
 
+
 hyprland = HyprlandService.get_default()
 system_tray = SystemTrayService.get_default()
 mpris_service = MprisService.get_default() 
+audio = AudioService.get_default()
+window_manager = WindowManager()
+backlight = BacklightService.get_default()
 
 class Mpris(Widget.Label):
     def __init__(self, **kwargs):
@@ -111,17 +115,12 @@ class Network(Widget.Box):
 class Volume(Widget.Box):
     def __init__(self):
         super().__init__()
-        self.audio = AudioService.get_default()
+        self.window = self.Window()
+        window_manager.window_list.append(self.window)
         self.icon = Widget.Button(
-                child=Widget.Icon(image=self.audio.speaker.bind("icon-name")),
-                on_click=lambda x: self.hide()
-                )
-        self.scale = Widget.Scale(
-                step=10,
-                value=self.audio.speaker.bind("volume"),
-                on_change=lambda x: self.audio.speaker.set_volume(x.value),
-                css_classes = ["slider"],
-                width_request = 90,
+                child=Widget.Icon(image=audio.speaker.bind("icon-name")),
+                on_click=lambda x: self.window.toggle()
+                # on_click=lambda x: self.window.toggle()
                 )
 
         self.revealed = False
@@ -142,23 +141,58 @@ class Volume(Widget.Box):
             self.set_child([self.icon, self.scale])
         else:
             self.set_child([self.icon])
+
+    class Window(Widget.RevealerWindow):
+        def __init__(self):
+            self.scale = Widget.Scale(
+                step=10,
+                value=audio.speaker.bind("volume"),
+                on_change=lambda x: audio.speaker.set_volume(x.value),
+                css_classes = ["slider"],
+                width_request = 90,
+            )           
+            self.button = Widget.Button(
+                child=Widget.Icon(
+                    image=audio.speaker.bind("icon-name")
+                ),
+                on_click=lambda x: audio.speaker.set_is_muted(not audio.speaker.is_muted) 
+            )
+            self.revealer_shit = Widget.Revealer(
+                    child=Widget.Box(child=[
+                        self.button,
+                        self.scale
+                    ],
+                    spacing=10
+                )
+            )
+            self.box_shit = Widget.Box(child=[self.revealer_shit])
+            self.box_shit.set_css_classes(["bar"])
+            super().__init__(
+                visible=False,
+                popup=True,
+                layer="top",
+                namespace="audio-revealer-window",
+                child=self.box_shit,
+                revealer=self.revealer_shit,
+                anchor=["top", "left"],
+                margin_left=20,
+                margin_top=10
+            )
+        def toggle(self):
+            window_manager.close_all_windows(ignore=self.namespace)
+            self.set_visible(not self.visible)
+
 
 class Backlight(Widget.Box):
     def __init__(self):
         super().__init__()
-        self.backlight = BacklightService.get_default()
+        self.window = self.Window()
+        window_manager.window_list.append(self.window)
         self.icon = Widget.Button(
                 child=Widget.Icon(image="weather-clear-symbolic"),
-                on_click=lambda x: self.hide()
+                on_click=lambda x: self.window.toggle()
                 )
-        self.scale = Widget.Scale(
-                step=10,
-                max=self.backlight.max_brightness,
-                value=self.backlight.bind("brightness"),
-                on_change=lambda x: self.backlight.set_brightness(x.value),
-                css_classes = ["slider"],
-                width_request = 90,
-                )
+
 
         self.revealed = False
 
@@ -171,13 +205,42 @@ class Backlight(Widget.Box):
         self.set_child([self.icon])
         self.set_spacing(10)
         
-    def hide(self):
-        self.revealed = not self.revealed
-        # self.hiding.set_reveal_child(self.revealed)
-        if self.revealed:
-            self.set_child([self.icon, self.scale])
-        else:
-            self.set_child([self.icon])
+    class Window(Widget.RevealerWindow):
+        def __init__(self):
+            self.scale = Widget.Scale(
+                step=10,
+                max=backlight.max_brightness,
+                value=backlight.bind("brightness"),
+                on_change=lambda x: backlight.set_brightness(x.value),
+                css_classes = ["slider"],
+                width_request = 90,
+            )         
+            self.icon = Widget.Icon(image="weather-clear-symbolic")
+
+            self.revealer_shit = Widget.Revealer(
+                    child=Widget.Box(child=[
+                        self.icon,
+                        self.scale
+                    ],
+                    spacing=10
+                )
+            )
+            self.box_shit = Widget.Box(child=[self.revealer_shit])
+            self.box_shit.set_css_classes(["bar"])
+            super().__init__(
+                visible=False,
+                popup=True,
+                layer="top",
+                namespace="backlight-revealer-window",
+                child=self.box_shit,
+                revealer=self.revealer_shit,
+                anchor=["top", "left"],
+                margin_left=20,
+                margin_top=10
+            )
+        def toggle(self):
+            window_manager.close_all_windows(ignore=self.namespace)
+            self.set_visible(not self.visible)
 
 class Power(Widget.Box):
     def __init__(self):
@@ -275,7 +338,30 @@ bar = Bar()
 
 bar.init(0)
 
+revealery = Widget.Revealer(
+    child=Widget.Label(label="smth", css_classes=["bar"])
+)
 
+boxy = Widget.Box(
+    child=[revealery],
+    valign="center",
+    halign="center",
+)
+
+smth = Widget.RevealerWindow(
+    namespace="my-window",
+    anchor=["left", "right", "top", "bottom"],  # to make a window fullscreen
+    child=Widget.Overlay(
+        child=Widget.Button(
+            vexpand=True,
+            hexpand=True,
+            can_focus=False,
+            on_click=lambda x: app.close_window("my-window"), # e.g., app.close_window("my-window")
+        ),
+        overlays=[boxy],
+    ),
+    revealer=revealery
+)
 
 
 # Widget.RegularWindow(
