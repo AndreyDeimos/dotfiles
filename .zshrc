@@ -1,4 +1,3 @@
-echo хуй
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
@@ -82,4 +81,3 @@ export PS1='%~> '
 # ██║░╚███║╚█████╔╝  ██████╦╝██║░░██║██████╔╝██║░░██║░░░██╗░░
 # ╚═╝░░╚══╝░╚════╝░  ╚═════╝░╚═╝░░╚═╝╚═════╝░╚═╝░░╚═╝░░░╚═╝░░" 
 clear
-#echo хуй
