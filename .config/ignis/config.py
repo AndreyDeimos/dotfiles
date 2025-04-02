@@ -1,7 +1,7 @@
 # fmt: off
 
 from modules import WindowManager
-from ignis.widgets import Widget, revealer
+from ignis.widgets import Widget
 from ignis.utils import Utils
 from ignis.app import IgnisApp
 from ignis.services.audio import AudioService
@@ -363,6 +363,8 @@ smth = Widget.RevealerWindow(
     revealer=revealery
 )
 
+# window_manager.window_list.append(smth)
+# toggle not made for windows that are hust variables
 
 # Widget.RegularWindow(
 #         namespace="lol",
