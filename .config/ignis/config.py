@@ -338,30 +338,30 @@ bar = Bar()
 
 bar.init(0)
 
-revealery = Widget.Revealer(
-    child=Widget.Label(label="smth", css_classes=["bar"])
-)
-
-boxy = Widget.Box(
-    child=[revealery],
-    valign="center",
-    halign="center",
-)
-
-smth = Widget.RevealerWindow(
-    namespace="my-window",
-    anchor=["left", "right", "top", "bottom"],  # to make a window fullscreen
-    child=Widget.Overlay(
-        child=Widget.Button(
-            vexpand=True,
-            hexpand=True,
-            can_focus=False,
-            on_click=lambda x: app.close_window("my-window"), # e.g., app.close_window("my-window")
-        ),
-        overlays=[boxy],
-    ),
-    revealer=revealery
-)
+# revealery = Widget.Revealer(
+#     child=Widget.Label(label="smth", css_classes=["bar"])
+# )
+#
+# boxy = Widget.Box(
+#     child=[revealery],
+#     valign="center",
+#     halign="center",
+# )
+#
+# smth = Widget.RevealerWindow(
+#     namespace="my-window",
+#     anchor=["left", "right", "top", "bottom"],  # to make a window fullscreen
+#     child=Widget.Overlay(
+#         child=Widget.Button(
+#             vexpand=True,
+#             hexpand=True,
+#             can_focus=False,
+#             on_click=lambda x: app.close_window("my-window"), # e.g., app.close_window("my-window")
+#         ),
+#         overlays=[boxy],
+#     ),
+#     revealer=revealery
+# )
 
 # window_manager.window_list.append(smth)
 # toggle not made for windows that are hust variables
