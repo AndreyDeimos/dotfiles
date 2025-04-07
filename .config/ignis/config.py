@@ -151,6 +151,13 @@ class Volume(Widget.Box):
                 css_classes = ["slider"],
                 width_request = 90,
             )           
+            self.spinbutton = Widget.SpinButton(
+                step=10,
+                value=audio.speaker.bind("volume"),
+                on_change=lambda x, value: audio.speaker.set_volume(value),
+                min=0,
+                max=300
+            )
             self.button = Widget.Button(
                 child=Widget.Icon(
                     image=audio.speaker.bind("icon-name")
@@ -160,7 +167,8 @@ class Volume(Widget.Box):
             self.revealer_shit = Widget.Revealer(
                     child=Widget.Box(child=[
                         self.button,
-                        self.scale
+                        self.scale,
+                        self.spinbutton
                     ],
                     spacing=10
                 )

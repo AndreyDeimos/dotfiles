@@ -12,6 +12,9 @@ M.base46 = {
     Comment = { italic = true, fg = colors.green },
     ["@comment"] = { italic = true, fg = colors.green },
   },
+  hl_add = {
+    Tabline = { fg = "NONE", bg = "NONE" },
+  },
 
   transparency = true,
 }
