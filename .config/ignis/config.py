@@ -191,9 +191,15 @@ class Volume(Widget.Box):
             self.set_visible(not self.visible)
 
 
-class Backlight(Widget.Box):
+class Backlight(Widget.Button):
     def __init__(self):
-        super().__init__()
+        self.icon = Widget.Icon(
+            image="weather-clear-symbolic",
+        )
+        super().__init__(
+            child=self.icon,
+            on_click=lambda x: self.window.toggle()
+        )
         self.scale = Widget.Scale(
             step=10,
             max=backlight.max_brightness,
@@ -218,24 +224,6 @@ class Backlight(Widget.Box):
             "margin_left": 20,
             "margin_top": 10,
         })
-        
-        window_manager.window_list.append(self.window)
-        self.icon = Widget.Button(
-                child=Widget.Icon(image="weather-clear-symbolic"),
-                on_click=lambda x: self.window.toggle()
-                )
-
-
-        self.revealed = False
-
-        # self.hiding = Widget.Revealer(
-        #         child=self.scale,
-        #         transition_type='slide_right',
-        #         transition_duration=100,
-        #         reveal_child=self.revealed
-        #         )
-        self.set_child([self.icon])
-        self.set_spacing(10)
         
 
 class Power(Widget.Box):

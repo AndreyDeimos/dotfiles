@@ -1,7 +1,4 @@
-from ignis.app import IgnisApp
 from ignis.widgets import Widget
-
-app = IgnisApp.get_default()
 
 
 class WindowManager:
@@ -24,6 +21,7 @@ class Window(Widget.RevealerWindow):
 
     def __init__(self, window_manager, content, window_name, box_args, window_args):
         self.window_manager = window_manager
+        self.window_manager.window_list.append(self)
 
         self._revealer = Widget.Revealer(child=content)
 
@@ -34,9 +32,7 @@ class Window(Widget.RevealerWindow):
                 vexpand=True,
                 hexpand=True,
                 can_focus=False,
-                on_click=lambda x: app.close_window(
-                    window_name
-                ),  # e.g., app.close_window("my-window")
+                on_click=lambda x: self.toggle(),  # e.g., app.close_window("my-window")
             ),
             overlays=[self._box],
         )
@@ -47,6 +43,7 @@ class Window(Widget.RevealerWindow):
             child=self._overlay,
             revealer=self._revealer,
             popup=True,
+            visible=False,
             **window_args,
         )
 
