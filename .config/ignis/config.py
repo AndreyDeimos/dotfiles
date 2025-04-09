@@ -1,6 +1,6 @@
 # fmt: off
 
-from modules import WindowManager
+from modules import WindowManager, Window
 from ignis.widgets import Widget
 from ignis.utils import Utils
 from ignis.app import IgnisApp
@@ -194,7 +194,31 @@ class Volume(Widget.Box):
 class Backlight(Widget.Box):
     def __init__(self):
         super().__init__()
-        self.window = self.Window()
+        self.scale = Widget.Scale(
+            step=10,
+            max=backlight.max_brightness,
+            value=backlight.bind("brightness"),
+            on_change=lambda x: backlight.set_brightness(x.value),
+            css_classes = ["slider"],
+            width_request = 90,
+        )         
+        self.icon = Widget.Icon(image="weather-clear-symbolic")
+        self.box = Widget.Box(child=[
+                self.scale,
+                self.icon
+            ],
+            css_classes = ["bar"],
+            spacing=10
+        )
+
+        self.window = Window(window_manager, self.box, "backlight", {
+            "valign": "start",
+            "halign": "start"
+        },{
+            "margin_left": 20,
+            "margin_top": 10,
+        })
+        
         window_manager.window_list.append(self.window)
         self.icon = Widget.Button(
                 child=Widget.Icon(image="weather-clear-symbolic"),
@@ -213,42 +237,6 @@ class Backlight(Widget.Box):
         self.set_child([self.icon])
         self.set_spacing(10)
         
-    class Window(Widget.RevealerWindow):
-        def __init__(self):
-            self.scale = Widget.Scale(
-                step=10,
-                max=backlight.max_brightness,
-                value=backlight.bind("brightness"),
-                on_change=lambda x: backlight.set_brightness(x.value),
-                css_classes = ["slider"],
-                width_request = 90,
-            )         
-            self.icon = Widget.Icon(image="weather-clear-symbolic")
-
-            self.revealer_shit = Widget.Revealer(
-                    child=Widget.Box(child=[
-                        self.icon,
-                        self.scale
-                    ],
-                    spacing=10
-                )
-            )
-            self.box_shit = Widget.Box(child=[self.revealer_shit])
-            self.box_shit.set_css_classes(["bar"])
-            super().__init__(
-                visible=False,
-                popup=True,
-                layer="top",
-                namespace="backlight-revealer-window",
-                child=self.box_shit,
-                revealer=self.revealer_shit,
-                anchor=["top", "left"],
-                margin_left=20,
-                margin_top=10
-            )
-        def toggle(self):
-            window_manager.close_all_windows(ignore=self.namespace)
-            self.set_visible(not self.visible)
 
 class Power(Widget.Box):
     def __init__(self):

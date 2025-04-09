@@ -110,4 +110,10 @@ return {
     end,
     ft = { "markdown" },
   },
+  {
+    "ThePrimeagen/vim-be-good",
+    cmd = {
+      "VimBeGood",
+    },
+  },
 }

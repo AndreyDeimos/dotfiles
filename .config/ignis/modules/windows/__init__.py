@@ -1,3 +1,3 @@
-from .windows import WindowManager
+from .windows import WindowManager, Window
 
-__all__ = ["WindowManager"]
+__all__ = ["WindowManager", "Window"]
