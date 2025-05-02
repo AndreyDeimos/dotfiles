@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+rofi \
+	-show drun \
+	-modi run,drun,ssh \
+	-scroll-method 1 \
+	-drun-match-fields all \
+	-drun-display-format "Fucking {name}" \
+	-no-drun-show-actions \
+	-terminal kitty \
+	-theme "$HOME"/.config/rofi/config/launcher.rasi
+  -run-command='uwsm app -- {cmd}'

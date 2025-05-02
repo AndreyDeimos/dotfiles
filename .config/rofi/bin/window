@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+rofi \
+	-show window \
+	-modi run,drun,ssh \
+	-scroll-method 1 \
+	-drun-match-fields all \
+	-drun-display-format "Fucking {name}" \
+	-no-drun-show-actions \
+	-terminal kitty \
+	-theme "$HOME"/.config/rofi/config/launcher.rasi
