@@ -1,5 +1,6 @@
 # fmt: off
 
+import cProfile
 from modules import WindowManager, Window
 from ignis.widgets import Widget
 from ignis.utils import Utils
@@ -43,7 +44,7 @@ class Tray(Widget.Box):
             super().__init__()
             if item.menu:
                 self.menu = item.menu.copy()
-                self.menu.add_css_class("tray-menu")
+                # self.menu.add_css_class("tray-menu")
             else:
                 self.menu = None 
             self.set_child(Widget.Box(child=[
@@ -98,7 +99,7 @@ class Network(Widget.Box):
         Utils.Poll(1000, lambda x: self.update())
         self.set_spacing(5)
         self.set_child([self.icon])
-        
+
     def update(self):
         if self.network.ethernet.is_connected:
             self.icon.set_image(self.network.ethernet.bind("icon_name"))
@@ -115,8 +116,48 @@ class Network(Widget.Box):
 class Volume(Widget.Box):
     def __init__(self):
         super().__init__()
-        self.window = self.Window()
-        window_manager.window_list.append(self.window)
+        self.scale = Widget.Scale(
+            step=10,
+            value=audio.speaker.bind("volume"),
+            on_change=lambda x: audio.speaker.set_volume(x.value),
+            css_classes = ["slider"],
+            width_request = 90,
+        )           
+        self.spinbutton = Widget.SpinButton(
+            step=10,
+            value=audio.speaker.bind("volume"),
+            on_change=lambda x, value: audio.speaker.set_volume(value),
+            min=0,
+            max=300
+        )
+        self.button = Widget.Button(
+            child=Widget.Icon(
+                image=audio.speaker.bind("icon-name")
+            ),
+            on_click=lambda x: audio.speaker.set_is_muted(not audio.speaker.is_muted) 
+        )
+        self.box = Widget.Box(
+            child=[
+                self.button,
+                self.scale,
+                self.spinbutton
+            ],
+            spacing=10,
+            css_classes = ["bar"]
+        )
+        self.window = Window(
+            window_manager,
+            self.box,
+            "Volume",
+            {
+                "valign": "start",
+                "halign": "start"
+            },
+            {
+                "margin_left": 20,
+                "margin_top": 10,
+            }
+        )
         self.icon = Widget.Button(
                 child=Widget.Icon(image=audio.speaker.bind("icon-name")),
                 on_click=lambda x: self.window.toggle()
@@ -144,34 +185,7 @@ class Volume(Widget.Box):
 
     class Window(Widget.RevealerWindow):
         def __init__(self):
-            self.scale = Widget.Scale(
-                step=10,
-                value=audio.speaker.bind("volume"),
-                on_change=lambda x: audio.speaker.set_volume(x.value),
-                css_classes = ["slider"],
-                width_request = 90,
-            )           
-            self.spinbutton = Widget.SpinButton(
-                step=10,
-                value=audio.speaker.bind("volume"),
-                on_change=lambda x, value: audio.speaker.set_volume(value),
-                min=0,
-                max=300
-            )
-            self.button = Widget.Button(
-                child=Widget.Icon(
-                    image=audio.speaker.bind("icon-name")
-                ),
-                on_click=lambda x: audio.speaker.set_is_muted(not audio.speaker.is_muted) 
-            )
             self.revealer_shit = Widget.Revealer(
-                    child=Widget.Box(child=[
-                        self.button,
-                        self.scale,
-                        self.spinbutton
-                    ],
-                    spacing=10
-                )
             )
             self.box_shit = Widget.Box(child=[self.revealer_shit])
             self.box_shit.set_css_classes(["bar"])
@@ -288,6 +302,7 @@ class Bar:
             spacing=10,
             css_classes=["bar"],
             child=[
+                Widget.Label(label=hyprland.main_keyboard.bind("active_keymap")),
                 self.power,
                 self.clock,
                 self.lock,

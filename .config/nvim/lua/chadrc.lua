@@ -7,10 +7,9 @@ local M = {}
 local colors = dofile(vim.g.base46_cache .. "colors")
 M.base46 = {
   theme = "catppuccin",
-
   hl_override = {
-    Comment = { italic = true, fg = colors.green },
-    ["@comment"] = { italic = true, fg = colors.green },
+    Comment = { italic = true, fg = colors.blue },
+    ["@comment"] = { italic = true, fg = colors.blue },
   },
   hl_add = {
     Tabline = { fg = "NONE", bg = "NONE" },
