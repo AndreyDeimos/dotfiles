@@ -4,7 +4,6 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help)
 map({ "n" }, "<leader>ra", vim.lsp.buf.rename)

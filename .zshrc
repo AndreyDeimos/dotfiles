@@ -1,3 +1,4 @@
+echo хуй
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=100000
@@ -23,7 +24,8 @@ alias cura="env QT_QPA_PLATFORM=wayland flatpak run com.ultimaker.cura -platform
 alias cd="z"
 alias tlmgr="$TEXMFDIST/scripts/texlive/tlmgr.pl --usermode"
 alias snvim="sudo -e"
-alias rm="rm -i"
+alias ssh="kitten ssh"
+alias update="yay --sudoloop --noconfirm"
 
 of() {
     loffice "$(find . -type f -iname "$1" | fzf)"
@@ -82,3 +84,4 @@ export PS1='%~> '
 # ██║░╚███║╚█████╔╝  ██████╦╝██║░░██║██████╔╝██║░░██║░░░██╗░░
 # ╚═╝░░╚══╝░╚════╝░  ╚═════╝░╚═╝░░╚═╝╚═════╝░╚═╝░░╚═╝░░░╚═╝░░" 
 clear
+#echo хуй

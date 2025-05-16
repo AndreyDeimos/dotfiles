@@ -1,7 +1,5 @@
 # fmt: off
 
-import cProfile
-from modules import WindowManager, Window
 from ignis.widgets import Widget
 from ignis.utils import Utils
 from ignis.app import IgnisApp
@@ -14,13 +12,13 @@ from ignis.services.system_tray import SystemTrayService, SystemTrayItem
 from ignis.services.mpris import MprisService, MprisPlayer
 import datetime
 import subprocess
-
+from modules import windows
 
 hyprland = HyprlandService.get_default()
 system_tray = SystemTrayService.get_default()
 mpris_service = MprisService.get_default() 
 audio = AudioService.get_default()
-window_manager = WindowManager()
+window_manager = windows.WindowManager()
 backlight = BacklightService.get_default()
 
 class Mpris(Widget.Label):
@@ -145,7 +143,7 @@ class Volume(Widget.Box):
             spacing=10,
             css_classes = ["bar"]
         )
-        self.window = Window(
+        self.window = windows.Window(
             window_manager,
             self.box,
             "Volume",
@@ -231,7 +229,7 @@ class Backlight(Widget.Button):
             spacing=10
         )
 
-        self.window = Window(window_manager, self.box, "backlight", {
+        self.window = windows.Window(window_manager, self.box, "backlight", {
             "valign": "start",
             "halign": "start"
         },{
