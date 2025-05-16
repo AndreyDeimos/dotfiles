@@ -6,5 +6,6 @@ local telescopeConfig = require "telescope.config"
 telescope.setup {
   extensions = {
     "fzf",
+    "remote-sshfs"
   },
 }

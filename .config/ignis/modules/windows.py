@@ -2,8 +2,6 @@ from ignis.widgets import Widget
 
 
 class WindowManager:
-    __gtype_name__ = "WindowManager"
-
     def __init__(self):
         self.window_list = []
 
@@ -17,8 +15,6 @@ class WindowManager:
 
 
 class Window(Widget.RevealerWindow):
-    __gtype_name__ = "Window"
-
     def __init__(self, window_manager, content, window_name, box_args, window_args):
         self.window_manager = window_manager
         self.window_manager.window_list.append(self)

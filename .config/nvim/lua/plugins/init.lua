@@ -129,4 +129,8 @@ return {
       require "configs.telescope"
     end,
   },
+  {
+    "nosduco/remote-sshfs.nvim",
+    config = true
+  },
 }
