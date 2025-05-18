@@ -1,5 +1,15 @@
 return {
   {
+   "rcarriga/nvim-notify",
+    lazy=false,
+    config = function()
+      vim.notify = require("notify")
+      require("notify").setup({
+        background_colour = "#000000",
+      })
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = require "configs.conform",
@@ -132,5 +142,11 @@ return {
   {
     "nosduco/remote-sshfs.nvim",
     config = true
+  },
+  {
+     "m4xshen/hardtime.nvim",
+     lazy = false,
+     dependencies = { "MunifTanjim/nui.nvim" },
+     opts = {}
   },
 }

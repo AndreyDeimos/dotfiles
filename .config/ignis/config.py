@@ -80,8 +80,22 @@ class Clock(Widget.Button):
     def __init__(self):
         super().__init__()
         self.labellle = Widget.Label()
-        self.set_child(self.labellle)
         Utils.Poll(1000, lambda x: self.update())
+        self.window = windows.Window(
+                window_manager,
+                Widget.Calendar(css_classes=["bar"]),
+                "calendar", 
+                {
+                    "valign": "start",
+                    "halign": "end",
+                },
+                {
+                    "margin_right": 20,
+                    "margin_top": 10
+                    }
+            )
+        self.set_child(self.labellle)
+        self.set_on_click(lambda x: self.window.toggle())
 
     def update(self):
         text = datetime.datetime.now().strftime("%H : %M")
@@ -309,7 +323,7 @@ class Bar:
         )
 
         self.child = Widget.CenterBox(
-            width_request=1560,
+            width_request=hyprland.monitors[0].width - 40,
             start_widget=self.start,
             center_widget=self.center,
             end_widget=self.end

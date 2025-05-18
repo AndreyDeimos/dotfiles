@@ -6,6 +6,9 @@ config.bind(",p", "spawn --userscript qute-pass --dmenu-invocation dmenu")
 config.bind(
     ",P", "spawn --userscript qute-pass --dmenu-invocation dmenu --password-only"
 )
+config.bind(
+    "<Escape>", "mode-leave ;; jseval -q document.activeElement.blur()", mode="insert"
+)
 c.editor.command = [
     "kitty",
     "nvim",
@@ -13,3 +16,5 @@ c.editor.command = [
     "-c",
     "normal {line}G{column0}l",
 ]
+c.scrolling.smooth = True
+c.content.pdfjs = True
