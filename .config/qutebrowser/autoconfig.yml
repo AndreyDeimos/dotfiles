@@ -6,6 +6,8 @@
 
 config_version: 2
 settings:
+  content.geolocation:
+    https://www.avito.ru: false
   content.javascript.clipboard:
     github.com: access
     https://github.com: access

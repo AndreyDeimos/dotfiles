@@ -46,3 +46,17 @@ class Window(Widget.RevealerWindow):
     def toggle(self):
         self.window_manager.close_all_windows(ignore=self.namespace)
         self.set_visible(not self.visible)
+
+
+class BackgroundWindow(Widget.Window):
+    def __init__(self, window_name, monitor, content, window_args):
+        print("making window")
+        super().__init__(
+            namespace=window_name,
+            monitor=monitor,
+            child=content,
+            **window_args,
+            exclusivity="ignore",
+            layer="bottom",
+            visible=True,
+        )
