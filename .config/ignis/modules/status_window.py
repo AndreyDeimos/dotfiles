@@ -12,7 +12,15 @@ def separator_maker():
 
 def Stats(monitor):
     logo = Widget.Icon(image=fetch_service.bind("os_logo"))
-    cpu = Widget.Label(label=fetch_service.bind("cpu_temp", lambda x: f"  : {x}"))
+    cpu = Widget.Label(
+        label=fetch_service.bind("cpu_temp", lambda x: f"  : {round(x)}")
+    )
+    Utils.Poll(
+        timeout=1_000,
+        callback=lambda self: cpu.set_label(
+            fetch_service.bind("cpu_temp", lambda x: f"  : {round(x)}")
+        ),
+    )
     mem_used = Widget.Scale(
         min=100,
         max=fetch_service.bind("mem_total"),

@@ -10,15 +10,14 @@ from ignis.services.network import NetworkService
 from ignis.services.hyprland import HyprlandService
 from ignis.services.system_tray import SystemTrayService, SystemTrayItem
 from ignis.services.mpris import MprisService, MprisPlayer
-import datetime
 import subprocess
-from modules import windows, status_window
+from modules import windows, status_window, clock
+import shared
 
 hyprland = HyprlandService.get_default()
 system_tray = SystemTrayService.get_default()
 mpris_service = MprisService.get_default() 
 audio = AudioService.get_default()
-window_manager = windows.WindowManager()
 backlight = BacklightService.get_default()
 
 class Mpris(Widget.Label):
@@ -76,30 +75,6 @@ class Workspaces(Widget.Box):
             if workspace.id == hyprland.active_workspace.id:
                 self.add_css_class("active")
 
-class Clock(Widget.Button):
-    def __init__(self):
-        super().__init__()
-        self.labellle = Widget.Label()
-        Utils.Poll(1000, lambda x: self.update())
-        self.window = windows.Window(
-                window_manager,
-                Widget.Calendar(css_classes=["bar"]),
-                "calendar", 
-                {
-                    "valign": "start",
-                    "halign": "end",
-                },
-                {
-                    "margin_right": 20,
-                    "margin_top": 10
-                    }
-            )
-        self.set_child(self.labellle)
-        self.set_on_click(lambda x: self.window.toggle())
-
-    def update(self):
-        text = datetime.datetime.now().strftime("%H : %M")
-        self.labellle.set_label(text)
 
 class Network(Widget.Box):
     def __init__(self):
@@ -158,7 +133,7 @@ class Volume(Widget.Box):
             css_classes = ["bar"]
         )
         self.window = windows.Window(
-            window_manager,
+            shared.window_manager,
             self.box,
             "Volume",
             {
@@ -213,7 +188,7 @@ class Volume(Widget.Box):
                 margin_top=10
             )
         def toggle(self):
-            window_manager.close_all_windows(ignore=self.namespace)
+            shared.window_manager.close_all_windows(ignore=self.namespace)
             self.set_visible(not self.visible)
 
 
@@ -243,7 +218,7 @@ class Backlight(Widget.Button):
             spacing=10
         )
 
-        self.window = windows.Window(window_manager, self.box, "backlight", {
+        self.window = windows.Window(shared.window_manager, self.box, "backlight", {
             "valign": "start",
             "halign": "start"
         },{
@@ -277,7 +252,7 @@ class buttons:
 
 class Bar:
     def __init__(self):
-        self.clock = Clock()
+        self.clock = clock.Clock()
         self.poweroff = Widget.Button(setup=lambda self: buttons.poweroff_button(self))
         self.lock = Widget.Button(setup=lambda self: buttons.lock_button(self))
         self.volume = Volume()
