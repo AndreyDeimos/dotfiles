@@ -9,6 +9,9 @@ config.bind(
 config.bind(
     "<Escape>", "mode-leave ;; jseval -q document.activeElement.blur()", mode="insert"
 )
+config.bind("aq", "quickmark-add {url} {title}")
+config.bind("<Ctrl-D>", "cmd-repeat 10 scroll down")
+config.bind("<Ctrl-U>", "cmd-repeat 10 scroll up")
 c.editor.command = [
     "kitty",
     "nvim",

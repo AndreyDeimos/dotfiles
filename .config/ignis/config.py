@@ -323,7 +323,7 @@ class Bar:
         )
 
         self.child = Widget.CenterBox(
-            width_request=hyprland.monitors[0].width - 40,
+            width_request=hyprland.monitors[0].width/hyprland.monitors[0].scale - 40,
             start_widget=self.start,
             center_widget=self.center,
             end_widget=self.end
@@ -337,6 +337,7 @@ class Bar:
             margin_top=16,
             anchor=["top"],
             exclusivity="exclusive",
+            visible=True
         )
 
 
@@ -347,5 +348,5 @@ app.apply_css("/home/deimos/.config/ignis/style.scss")
 
 bar = Bar()
 
-bar.init(0)
 status_window.Stats(0)
+bar.init(0)
