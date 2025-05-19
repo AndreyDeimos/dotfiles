@@ -1,6 +1,6 @@
 from ignis.widgets import Widget
 from ignis.utils import Utils
-import datetime
+from datetime import datetime
 from modules import windows
 import shared
 
@@ -10,9 +10,10 @@ class Clock(Widget.Button):
         super().__init__()
         self.labellle = Widget.Label()
         Utils.Poll(1000, lambda x: self.update())
+        self.calendar = Widget.Calendar(css_classes=["bar"])
         self.window = windows.Window(
             shared.window_manager,
-            Widget.Calendar(css_classes=["bar"]),
+            self.calendar,
             "calendar",
             {
                 "valign": "start",
@@ -24,5 +25,5 @@ class Clock(Widget.Button):
         self.set_on_click(lambda x: self.window.toggle())
 
     def update(self):
-        text = datetime.datetime.now().strftime("%H : %M")
+        text = datetime.now().strftime("%H : %M")
         self.labellle.set_label(text)

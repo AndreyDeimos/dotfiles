@@ -10,6 +10,14 @@
   border: #8aadf4 3px solid;
   background: rgba(36, 39,58, 1);
   color: #cad3f5;
+  grid label.day-number {
+    margin: 2px;
+  }
+  grid label.today {
+    background-color: #8aadf4;
+    border-radius: 5px;
+    color: rgba(36, 39,58, 1);
+  }
 }
 
 .slider trough,
@@ -36,6 +44,4 @@
   // padding: 0.5rem;
   border: #8aadf4 2px solid;
 }
-
-
 

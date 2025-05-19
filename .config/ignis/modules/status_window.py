@@ -22,7 +22,7 @@ def Stats(monitor):
         ),
     )
     mem_used = Widget.Scale(
-        min=100,
+        min=0,
         max=fetch_service.bind("mem_total"),
         value=fetch_service.bind("mem_used"),
         width_request=100,
