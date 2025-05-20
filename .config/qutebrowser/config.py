@@ -21,3 +21,4 @@ c.editor.command = [
 ]
 c.scrolling.smooth = True
 c.content.pdfjs = True
+catppuccin.setup(c, "macchiato")

@@ -36,6 +36,7 @@
   "ui": { "branch": "v3.0", "commit": "12b997bb9434b159cb5c5b015278a8cab50de056" },
   "vim-bbye": { "branch": "master", "commit": "25ef93ac5a87526111f43e5110675032dbcacf56" },
   "vim-be-good": { "branch": "master", "commit": "0ae3de14eb8efc6effe7704b5e46495e91931cc5" },
+  "vim-chat": { "branch": "master", "commit": "07d9efa792dcfa422b1d96e6b0c39629a97634e1" },
   "volt": { "branch": "main", "commit": "c45d5f48da8e802e608b5c6da471ca4d84276dfb" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }

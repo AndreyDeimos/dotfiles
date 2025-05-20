@@ -1,12 +1,12 @@
 return {
   {
-   "rcarriga/nvim-notify",
-    lazy=false,
+    "rcarriga/nvim-notify",
+    lazy = false,
     config = function()
-      vim.notify = require("notify")
-      require("notify").setup({
+      vim.notify = require "notify"
+      require("notify").setup {
         background_colour = "#000000",
-      })
+      }
     end,
   },
   {
@@ -141,12 +141,12 @@ return {
   },
   {
     "nosduco/remote-sshfs.nvim",
-    config = true
+    config = true,
   },
   {
-     "m4xshen/hardtime.nvim",
-     lazy = false,
-     dependencies = { "MunifTanjim/nui.nvim" },
-     opts = {}
+    "m4xshen/hardtime.nvim",
+    lazy = false,
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {},
   },
 }
