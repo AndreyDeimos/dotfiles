@@ -26,6 +26,8 @@ alias tlmgr="$TEXMFDIST/scripts/texlive/tlmgr.pl --usermode"
 alias snvim="sudo -e"
 alias ssh="kitten ssh"
 alias update="yay --sudoloop --noconfirm"
+alias fakechroot="fakechroot fakeroot chroot neovim_lolz bash"
+alias nvim-rewrite="NVIM_APPNAME=nvim-lazyvim nvim"
 
 of() {
     loffice "$(find . -type f -iname "$1" | fzf)"

@@ -149,4 +149,16 @@ return {
     dependencies = { "MunifTanjim/nui.nvim" },
     opts = {},
   },
+  {
+    "mfussenegger/nvim-dap",
+    opts = {},
+    config = function()
+      require "configs.dap"
+    end,
+  },
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "nvim-neotest/nvim-nio" },
+    opts = {},
+  },
 }
