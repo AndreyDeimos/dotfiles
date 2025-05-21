@@ -27,7 +27,7 @@ alias snvim="sudo -e"
 alias ssh="kitten ssh"
 alias update="yay --sudoloop --noconfirm"
 alias fakechroot="fakechroot fakeroot chroot neovim_lolz bash"
-alias nvim-rewrite="NVIM_APPNAME=nvim-lazyvim nvim"
+alias nvim-rewrite="NVIM_APPNAME=nvim-rewrite nvim"
 
 of() {
     loffice "$(find . -type f -iname "$1" | fzf)"
@@ -86,4 +86,3 @@ export PS1='%~> '
 # ██║░╚███║╚█████╔╝  ██████╦╝██║░░██║██████╔╝██║░░██║░░░██╗░░
 # ╚═╝░░╚══╝░╚════╝░  ╚═════╝░╚═╝░░╚═╝╚═════╝░╚═╝░░╚═╝░░░╚═╝░░" 
 clear
-#echo хуй
