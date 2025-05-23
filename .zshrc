@@ -24,7 +24,6 @@ alias cura="env QT_QPA_PLATFORM=wayland flatpak run com.ultimaker.cura -platform
 alias cd="z"
 alias tlmgr="$TEXMFDIST/scripts/texlive/tlmgr.pl --usermode"
 alias snvim="sudo -e"
-alias ssh="kitten ssh"
 alias update="yay --sudoloop --noconfirm"
 alias fakechroot="fakechroot fakeroot chroot neovim_lolz bash"
 alias nvim-rewrite="NVIM_APPNAME=nvim-rewrite nvim"
