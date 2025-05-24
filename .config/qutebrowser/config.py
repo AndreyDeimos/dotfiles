@@ -4,6 +4,9 @@ config.load_autoconfig()
 
 config.bind(",p", "spawn --userscript qute-pass --dmenu-invocation dmenu")
 config.bind(
+    "<Ctrl-P>", "spawn --userscript qute-pass --dmenu-invocation dmenu", mode="insert"
+)
+config.bind(
     ",P", "spawn --userscript qute-pass --dmenu-invocation dmenu --password-only"
 )
 config.bind(
@@ -21,4 +24,5 @@ c.editor.command = [
 ]
 c.scrolling.smooth = True
 c.content.pdfjs = True
+c.content.cookies.accept = "no-3rdparty"
 catppuccin.setup(c, "latte")

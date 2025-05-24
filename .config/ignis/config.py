@@ -8,51 +8,14 @@ from ignis.services.backlight import BacklightService
 from ignis.services.upower import UPowerService
 from ignis.services.network import NetworkService
 from ignis.services.hyprland import HyprlandService
-from ignis.services.system_tray import SystemTrayService, SystemTrayItem
-from ignis.services.mpris import MprisService, MprisPlayer
 import subprocess
-from modules import windows, status_window, clock
+from modules import windows, status_window, clock, tray
 import shared
 
 hyprland = HyprlandService.get_default()
-system_tray = SystemTrayService.get_default()
-mpris_service = MprisService.get_default() 
 audio = AudioService.get_default()
 backlight = BacklightService.get_default()
 
-class Mpris(Widget.Label):
-    def __init__(self, **kwargs):
-        self.mpris = mpris_service
-        super().__init__(**kwargs)
-        self.set_label(self.mpris.bind("players", lambda x: "" if len(x) == 0 else x[-1].title))
-
-    class Player:
-        def __init__(self, player: MprisPlayer):
-            MprisPlayer.connect("closed", lambda x: self.unparent())
-
-        
-class Tray(Widget.Box):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.set_spacing(10)
-        system_tray.connect("added", lambda x, item: self.append(self.TrayItem(item)))
-    class TrayItem(Widget.Button):
-        def __init__(self, item: SystemTrayItem):
-            super().__init__()
-            if item.menu:
-                self.menu = item.menu.copy()
-                # self.menu.add_css_class("tray-menu")
-            else:
-                self.menu = None 
-            self.set_child(Widget.Box(child=[
-                Widget.Icon(image=item.bind("icon")), self.menu
-                ]))
-            item.connect("removed", lambda x: self.unparent())
-            self.set_tooltip_text(item.bind("tooltip"))
-            if self.menu:
-                self.set_on_click(lambda x: self.menu.popup())
-                self.set_on_right_click(lambda x: self.menu.popup())
-    
 class Workspaces(Widget.Box):
     def __init__(self):
         super().__init__()
@@ -260,13 +223,10 @@ class Bar:
         self.power = Power()
         self.network = Network()
         self.workspaces = Workspaces()
-        self.tray = Tray()
-        self.mpris = Mpris()
+        self.tray = tray.Tray()
 
         
         self.workspaces.add_css_class("bar")
-        self.tray.set_css_classes(system_tray.bind("items", lambda x: ["bar"] if len(x) != 0 else []))
-        self.mpris.set_css_classes(mpris_service.bind("players", lambda x: [] if len(x) == 0 else ["bar"]))
 
         self.start = Widget.Box(
             child=[
